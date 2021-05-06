@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import weapon, order, weapon_order
 
 
@@ -56,4 +56,17 @@ def add_weapon(request):
             weapon_Price = weap_Price,
             weapon_Type = weap_Type,
             )
-    return redirect('Inventory')
+    return redirect('inventory')
+
+def delete_weapon(request, pk):
+    weapon.objects.filter(pk=pk).delete()
+    return redirect('inventory')
+
+def edit_weapon(request,pk):
+    e_weapon = weapon.get_object_or_404(pk=pk)
+    e_weapon.weap_Name = request.POST.get('weap_Name')
+    e_weapon.weap_Price = request.POST.get('weap_Price')
+    e_weapon.weap_Type = request.POST.get('weap_Type')
+    e_weapon.save()
+    
+    return redirect('inventory')

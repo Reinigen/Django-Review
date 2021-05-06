@@ -73,49 +73,37 @@
                       {% csrf_token %}
                       <div class="modal-body container-fluid">
                         <div class="form-check">
-                          <label for="weapon_Name" class="col-form-label bg-dark text-white">Weapon Name:</label>
-                            <input type='text' name='weapon_Name' class="form-control" placeholder="Weapon Name">
+                          <label for="weap_Name" class="col-form-label bg-dark text-white">Weapon Name:</label>
+                            <input type='text' name='weap_Name' class="form-control" placeholder="Weapon Name">
                         </div>
                         <div class="form-check">
-                          <label for="weapon_Price" class="col-form-label bg-dark text-white">Weapon Price:</label>
-                          <input type='text' name='weapon_Price' class="form-control" placeholder="Weapon Price">
+                          <label for="weap_Price" class="col-form-label bg-dark text-white">Weapon Price:</label>
+                          <input type='number' name='weap_Price' class="form-control" placeholder="Weapon Price">
                         </div>
                         <div class="form-check">
-                          <label for="weapon_Type" class="col-form-label bg-dark text-white">Weapon Type:</label>
+                          <label for="weap_Type" class="col-form-label bg-dark text-white">Weapon Type:</label>
                           <div class="form-check">
-                            <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Weapon Types
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <h6 class="dropdown-header">Choose a type</h6>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="AN">Ammunition</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="FE">Finesse</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="HY">Heavy</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="ID">Improvised</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="LT">Light</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="LG">Loading</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="ML">Martial</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="RD">Ranged</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="RH">Reach</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="SL">Special</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="TN">Thrown</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="TD">Two Handed</button>
-                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="VE">Versatile</button>
-                              </div>
-                            </div>
+                            <select class="form-control" name='weap_Type'aria-labelledby="dropdownMenuButton">
+                              {% for key,value in weapon_types.items %}
+                                <option type='dropdown-item' class="form-control" value="{{ key }}">
+                                    {{ value }}
+                                </option>
+                              {% endfor %}
+                              <!-- <option type='dropdown-item' class="form-control" value="AN">Ammunition</option>-->
+                            </select>
                           </div>
                         </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
-          </div>
+              <!-- ================================== MODAL ADD WEAPON END ======================================== -->
+            </div>
         </div>
         <div class="row g-3">
           <table class="table">
@@ -141,10 +129,63 @@
                 {% endfor %}
                 </td>
                 <td>
-                    <button class="btn btn-primary itembut text-white bg-dark">Edit</button>
+                    <button class="btn btn-primary itembut text-white bg-dark" data-toggle="modal" data-target="#Edit_Weapon_Modal">Edit</button>
+                    <!-- ================================== MODAL EDIT WEAPON ======================================== -->
+                    <div class="modal fade" id="Edit_Weapon_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content bg-dark">
+                          <div class="modal-header bg-dark">
+                            <h5 class="modal-title bg-dark text-white" id="exampleModalLabel">Add Weapon</h5>
+                            <button type="button" class="close bg-dark text-white" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+
+                          <!-- ================================== MODAL EDIT WEAPON CONTENT ======================================== -->
+                          <form action="{% url 'edit_weapon' i.pk%}">
+                            {% csrf_token %}
+                            <div class="modal-body container-fluid">
+                              <div class="form-check">
+                                <label for="weap_Name" class="col-form-label bg-dark text-white">Weapon Name:</label>
+                                  <input type='text' name='weap_Name' class="form-control" value="{{i.weapon_Name}}" placeholder="Weapon Name">
+                              </div>
+                              <div class="form-check">
+                                <label for="weap_Price" class="col-form-label bg-dark text-white">Weapon Price:</label>
+                                <input type='number' name='weap_Price' class="form-control" value="{{i.weapon_Price}}" placeholder="Weapon Price">
+                              </div>
+                              <div class="form-check">
+                                <label for="weap_Type" class="col-form-label bg-dark text-white">Weapon Type:</label>
+                                <div class="form-check">
+                                  <select class="form-control" name='weap_Type'aria-labelledby="dropdownMenuButton">
+                                    {% for key,value in weapon_types.items %}
+                                      {% if key == i.weapon_Type %}
+                                        <option selected type='dropdown-item' class="form-control" value="{{ i.weapon_Type }}">
+                                          {{ value }}
+                                        </option>
+                                      {% else %}
+                                        <option type='dropdown-item' class="form-control" value="{{ key }}">
+                                          {{ value }}
+                                        </option>
+                                      {% endif %}
+                                    {% endfor %}
+                                    <!-- <option type='dropdown-item' class="form-control" value="AN">Ammunition</option>-->
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ================================== MODAL EDIT WEAPON END ======================================== -->
+                  </div>
                 </td>
                 <td>
-                  <button class="btn btn-primary itembut text-white bg-dark">Delete</button>
+                  <a class="btn btn-danger itemdel" href="{% url 'delete_weapon' pk=i.pk %}">Delete</a>
               </td>
               </tr>
               {% endfor %}
