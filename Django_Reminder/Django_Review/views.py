@@ -45,3 +45,15 @@ def getAllWeaponTypes():
         }
     
     return WEAPON_TYPES
+
+def add_weapon(request):
+    if(request.method == "POST"):
+        weap_Name = request.POST.get('weap_Name')
+        weap_Price = request.POST.get('weap_Price')
+        weap_Type = request.POST.get('weap_Type')
+        weapon.objects.create(
+            weapon_Name = weap_Name,
+            weapon_Price = weap_Price,
+            weapon_Type = weap_Type,
+            )
+    return redirect('Inventory')
