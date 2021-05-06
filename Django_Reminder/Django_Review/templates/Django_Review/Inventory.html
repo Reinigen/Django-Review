@@ -60,20 +60,58 @@
               <!-- ================================== MODAL ADD WEAPON ======================================== -->
               <div class="modal fade" id="Add_Weapon_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <div class="modal-content bg-dark">
+                    <div class="modal-header bg-dark">
+                      <h5 class="modal-title bg-dark text-white" id="exampleModalLabel">Add Weapon</h5>
+                      <button type="button" class="close bg-dark text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <div class="modal-body">
-                      ...
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+
+                    <!-- ================================== MODAL ADD WEAPON CONTENT ======================================== -->
+                    <form method="POST" action="{% url 'add_weapon' %}">
+                      {% csrf_token %}
+                      <div class="modal-body container-fluid">
+                        <div class="form-check">
+                          <label for="weapon_Name" class="col-form-label bg-dark text-white">Weapon Name:</label>
+                            <input type='text' name='weapon_Name' class="form-control" placeholder="Weapon Name">
+                        </div>
+                        <div class="form-check">
+                          <label for="weapon_Price" class="col-form-label bg-dark text-white">Weapon Price:</label>
+                          <input type='text' name='weapon_Price' class="form-control" placeholder="Weapon Price">
+                        </div>
+                        <div class="form-check">
+                          <label for="weapon_Type" class="col-form-label bg-dark text-white">Weapon Type:</label>
+                          <div class="form-check">
+                            <div class="dropdown">
+                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Weapon Types
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <h6 class="dropdown-header">Choose a type</h6>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="AN">Ammunition</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="FE">Finesse</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="HY">Heavy</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="ID">Improvised</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="LT">Light</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="LG">Loading</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="ML">Martial</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="RD">Ranged</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="RH">Reach</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="SL">Special</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="TN">Thrown</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="TD">Two Handed</button>
+                                <button type='dropdown-item' name='weapon_Type' class="form-control" value="VE">Versatile</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
