@@ -93,6 +93,10 @@
                             </select>
                           </div>
                         </div>
+                        <div class="form-check">
+                          <label for="weap_Stock" class="col-form-label bg-dark text-white">Weapon Stock:</label>
+                          <input type='number' name='weap_Stock' class="form-control" value="{{i.weapon_Stock}}" placeholder="Weapon Stock">
+                        </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,6 +116,7 @@
                 <th class="text-white bg-dark" scope="col">Weapon Name</th>
                 <th class="text-white bg-dark" scope="col">Weapon Price</th>
                 <th class="text-white bg-dark" scope="col">Weapon Type</th>
+                <th class="text-white bg-dark" scope="col">Weapon Stock</th>
                 <th class="text-white bg-dark" scope="col">Action</th>
                 <th scope="col"></th>
               </tr>
@@ -128,14 +133,15 @@
                   {% endif %}
                 {% endfor %}
                 </td>
+                <td class = "iprice text-white bg-dark">{{i.weapon_Stock}}</td>
                 <td>
-                    <button class="btn btn-primary itembut text-white bg-dark" data-toggle="modal" data-target="#Edit_Weapon_Modal">Edit</button>
+                    <button class="btn btn-primary itembut text-white bg-dark" data-toggle="modal" data-target="#MODAL{{i.pk}}">Edit</button>
                     <!-- ================================== MODAL EDIT WEAPON ======================================== -->
-                    <div class="modal fade" id="Edit_Weapon_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="MODAL{{i.pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content bg-dark">
                           <div class="modal-header bg-dark">
-                            <h5 class="modal-title bg-dark text-white" id="exampleModalLabel">Add Weapon</h5>
+                            <h5 class="modal-title bg-dark text-white" id="exampleModalLabel">Edit Weapon</h5>
                             <button type="button" class="close bg-dark text-white" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -171,6 +177,10 @@
                                     <!-- <option type='dropdown-item' class="form-control" value="AN">Ammunition</option>-->
                                   </select>
                                 </div>
+                              </div>
+                              <div class="form-check">
+                                <label for="weap_Stock" class="col-form-label bg-dark text-white">Weapon Stock:</label>
+                                <input type='number' name='weap_Stock' class="form-control" value="{{i.weapon_Stock}}" placeholder="Weapon Stock">
                               </div>
                             </div>
                             <div class="modal-footer">

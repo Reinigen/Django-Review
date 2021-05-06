@@ -67,7 +67,8 @@
         </h4>
         <ul class="list-group mb-3" id="ord">
         </ul>
-        <form method="POST" action=""> 
+        <form method="POST" action="{% url 'confirm_order' %}">
+          {% csrf_token %}
 
           <h4 class="mb-3 text-white bg-dark">Payment Type</h4>
           <div class="my-3">
@@ -93,40 +94,33 @@
             <table class="table text-white bg-dark">
               <thead>
                 <tr>
-                  <th scope="col">Item Name</th>
-                  <th scope="col">Item Price</th>
+                  <th scope="col">Weapon Name</th>
+                  <th scope="col">Weapon Price</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class = "iname">Item1</td>
-                  <td class = "iprice">PHP 100</td>
-                  <td>
-                    <input type="number" class="form-control lineamount" value = 0>
-                    <input type="hidden" class="form-control nmeid" value = {{i.pk}}>
-                  </td>
-                  <td><button class="btn btn-primary itembut text-white bg-dark">Add</button></td>
-                </tr>
-                <tr>
-                  <td class = "iname">Item 2</td>
-                  <td class = "iprice">PHP 200</td>
-                  <td>
-                    <input type="number" class="form-control lineamount" value = 0>
-                    <input type="hidden" class="form-control nmeid" value = {{i.pk}}>
-                  </td>
-                  <td><button class="btn btn-primary itembut text-white bg-dark">Add</button></td>
-                </tr>
-                <tr>
-                  <td class = "iname">Item 3</td>
-                  <td class = "iprice">PHP 300</td>
-                  <td>
-                    <input type="number" class="form-control lineamount" value = 0>
-                    <input type="hidden" class="form-control nmeid" value = {{i.pk}}>
-                  </td>
-                  <td><button class="btn btn-primary itembut text-white bg-dark">Add</button></td>
-                </tr>
+                {% for i in weapons %}
+                  {% if i.weapon_Stock == 0 %}
+                    <tr>
+                      <td class = "wname text-white bg-dark">Item Unavailable</td>
+                      <td class = "wprice text-white bg-dark"></td>
+                      <td class = "wprice text-white bg-dark"></td>
+                      <td class = "wprice text-white bg-dark"></td>
+                    </tr>
+                  {% else %}
+                    <tr>
+                      <td class = "wname text-white bg-dark">Item {{i.weapon_Name}}</td>
+                      <td class = "wprice text-white bg-dark">PHP {{i.weapon_Price}}</td>
+                      <td>
+                        <input type="number" class="form-control lineamount" value = 0>
+                        <input type="hidden" class="form-control nmeid" value = {{i.pk}}>
+                      </td>
+                      <td><button class="btn btn-primary itembut text-white bg-dark">Add</button></td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -147,9 +141,9 @@
       $(document).ready(function(){
             $('.itembut').click(function() {
               var amt = $( this ).parent().parent().find(".lineamount").val();
-              var nme = $( this ).parent().parent().find(".iname").html();
+              var nme = $( this ).parent().parent().find(".wname").html();
               var nmeid = $( this ).parent().parent().find(".nmeid").val();
-              var prc = $( this ).parent().parent().find(".iprice").html();
+              var prc = $( this ).parent().parent().find(".wprice").html();
               var tamt = parseFloat($( "#totamt").html());
               prc_amt = prc.split(" ")
               lt = parseFloat(prc_amt[1]) * parseFloat(amt)

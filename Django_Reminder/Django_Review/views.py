@@ -4,7 +4,8 @@ from .models import weapon, order, weapon_order
 
 # Create your views here.
 def home(request):
-    return render(request, 'Django_Review/Home.html')
+    all_weapons = weapon.objects.all()
+    return render(request, 'Django_Review/Home.html', {'weapons': all_weapons})
 
 def weapons_inv(request):
     weapon_types = getAllWeaponTypes()
@@ -51,10 +52,12 @@ def add_weapon(request):
         weap_Name = request.POST.get('weap_Name')
         weap_Price = request.POST.get('weap_Price')
         weap_Type = request.POST.get('weap_Type')
+        weap_Stock = request.POST.get('weap_Stock')
         weapon.objects.create(
             weapon_Name = weap_Name,
             weapon_Price = weap_Price,
             weapon_Type = weap_Type,
+            weapon_Stock = weap_Stock,
             )
     return redirect('inventory')
 
@@ -63,10 +66,32 @@ def delete_weapon(request, pk):
     return redirect('inventory')
 
 def edit_weapon(request,pk):
-    e_weapon = weapon.get_object_or_404(pk=pk)
-    e_weapon.weap_Name = request.POST.get('weap_Name')
-    e_weapon.weap_Price = request.POST.get('weap_Price')
-    e_weapon.weap_Type = request.POST.get('weap_Type')
+    e_weapon = get_object_or_404(weapon, pk=pk)
+    e_weapon.weapon_Name = request.POST.get('weap_Name', default=e_weapon.weapon_Name)
+    e_weapon.weapon_Price = request.POST.get('weap_Price', default=e_weapon.weapon_Price)
+    e_weapon.weapon_Type = request.POST.get('weap_Type', default=e_weapon.weapon_Type)
+    e_weapon.weapon_Stock = request.POST.get('weap_Stock', default=e_weapon.weapon_Stock)
     e_weapon.save()
     
     return redirect('inventory')
+
+def subtract_Stock(request, pk, x):
+    Main_Stock = weapon.objects.get(pk=pk)
+    return Main_Stock.weapon_Stock - x
+
+def confirm_order(request):
+    if(request.method == "POST"):
+        ptype = request.POST.get("payment_method")
+        weaps = request.POST.get("complete_order")
+        total_amt = request.POST.get("total_amount")
+        weap_ord = order.objects.create(total_amount_paid=total_amt, payment_type=ptype)
+
+        weap_fixed = weaps[:-1]
+        stuff = weap_fixed.split("-")
+        for it in stuff:
+            weap_obj = weapon.objects.get(pk=it[0])
+            subtract_Stock(request, pk=it[0],x=int(it[2]))
+            itprice = weap_obj.getPrice()
+            lt = itprice * int(it[2])
+            weapon_order.objects.create(weapon_ID =weap_obj, order_ID=weap_ord, line_Total=lt, quantity=it[2])
+        return redirect('Home')

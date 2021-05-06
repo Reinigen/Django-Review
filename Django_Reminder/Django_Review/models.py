@@ -36,6 +36,7 @@ class weapon(models.Model):
     weapon_Name = models.CharField(max_length=100)
     weapon_Price = models.DecimalField(max_digits=6, decimal_places=2)
     weapon_Type = models.CharField(max_length=2, choices=WEAPON_TYPES, default=AMMUNITION)
+    weapon_Stock = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     objects = models.Manager()
 
     def getName(self):
@@ -44,6 +45,8 @@ class weapon(models.Model):
         return self.weapon_Price
     def getType(self):
         return self.weapon_Type
+    def getStock(self):
+        return self.weapon_Stock
     def __str__(self):
         return str(self.pk) + ": " + self.weapon_Name
 
@@ -56,7 +59,6 @@ class order(models.Model):
     ]
 
     total_amount_paid = models.DecimalField(max_digits=6, decimal_places=2)
-    order_date = models.DateField()
     payment_type = models.CharField(max_length=2,choices=PAYMENT_TYPE, default=None)
     objects = models.Manager()
 
