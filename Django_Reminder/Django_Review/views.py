@@ -8,6 +8,7 @@ def home(request):
 
 def weapons_inv(request):
     weapon_types = getAllWeaponTypes()
+    print(weapon_types["AN"])
     all_weapons = weapon.objects.all()
     return render(request, 'Django_Review/Inventory.html', {'weapons': all_weapons, 'weapon_types': weapon_types})
 
