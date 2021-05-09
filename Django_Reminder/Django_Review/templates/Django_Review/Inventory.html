@@ -152,17 +152,17 @@
                             {% csrf_token %}
                             <div class="modal-body container-fluid">
                               <div class="form-check">
-                                <label for="weap_Name" class="col-form-label bg-dark text-white">Weapon Name:</label>
-                                  <input type='text' name='weap_Name' class="form-control" value="{{i.weapon_Name}}" placeholder="Weapon Name">
+                                <label for="e_weap_Name" class="col-form-label bg-dark text-white">Weapon Name:</label>
+                                  <input type='text' name='e_weap_Name' class="form-control" value="{{i.weapon_Name}}" placeholder="Weapon Name">
                               </div>
                               <div class="form-check">
-                                <label for="weap_Price" class="col-form-label bg-dark text-white">Weapon Price:</label>
-                                <input type='number' name='weap_Price' class="form-control" value="{{i.weapon_Price}}" placeholder="Weapon Price">
+                                <label for="e_weap_Price" class="col-form-label bg-dark text-white">Weapon Price:</label>
+                                <input type='number' name='e_weap_Price' class="form-control" value="{{i.weapon_Price}}" placeholder="Weapon Price">
                               </div>
                               <div class="form-check">
-                                <label for="weap_Type" class="col-form-label bg-dark text-white">Weapon Type:</label>
+                                <label for="e_weap_Type" class="col-form-label bg-dark text-white">Weapon Type:</label>
                                 <div class="form-check">
-                                  <select class="form-control" name='weap_Type'aria-labelledby="dropdownMenuButton">
+                                  <select class="form-control" name='e_weap_Type'aria-labelledby="dropdownMenuButton">
                                     {% for key,value in weapon_types.items %}
                                       {% if key == i.weapon_Type %}
                                         <option selected type='dropdown-item' class="form-control" value="{{ i.weapon_Type }}">
@@ -179,8 +179,8 @@
                                 </div>
                               </div>
                               <div class="form-check">
-                                <label for="weap_Stock" class="col-form-label bg-dark text-white">Weapon Stock:</label>
-                                <input type='number' name='weap_Stock' class="form-control" value="{{i.weapon_Stock}}" placeholder="Weapon Stock">
+                                <label for="e_weap_Stock" class="col-form-label bg-dark text-white">Weapon Stock:</label>
+                                <input type='number' name='e_weap_Stock' class="form-control" value="{{i.weapon_Stock}}" placeholder="Weapon Stock">
                               </div>
                             </div>
                             <div class="modal-footer">

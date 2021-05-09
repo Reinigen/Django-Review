@@ -58,7 +58,7 @@ class order(models.Model):
         (CREDIT, 'Credit'),
     ]
 
-    total_amount_paid = models.DecimalField(max_digits=6, decimal_places=2)
+    total_amount_paid = models.DecimalField(max_digits=15, decimal_places=2)
     payment_type = models.CharField(max_length=2,choices=PAYMENT_TYPE, default=None)
     objects = models.Manager()
 
@@ -80,8 +80,8 @@ class order(models.Model):
 class weapon_order(models.Model):
     weapon_ID = models.ForeignKey('Weapon', on_delete=models.CASCADE)
     order_ID = models.ForeignKey('Order', on_delete=models.CASCADE)
-    line_Total = models.DecimalField(max_digits=5, decimal_places=2)
-    quantity = models.DecimalField(max_digits=6, decimal_places=2)
+    line_Total = models.DecimalField(max_digits=9, decimal_places=2)
+    quantity = models.DecimalField(max_digits=9, decimal_places=2)
     objects = models.Manager()
 
     def getWeaponOrder(self):
