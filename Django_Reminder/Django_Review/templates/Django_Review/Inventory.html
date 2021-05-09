@@ -148,21 +148,21 @@
                           </div>
 
                           <!-- ================================== MODAL EDIT WEAPON CONTENT ======================================== -->
-                          <form action="{% url 'edit_weapon' i.pk%}">
+                          <form method="POST" id="edit_form" action="{% url 'edit_weapon' i.pk%}">
                             {% csrf_token %}
                             <div class="modal-body container-fluid">
                               <div class="form-check">
                                 <label for="e_weap_Name" class="col-form-label bg-dark text-white">Weapon Name:</label>
-                                  <input type='text' name='e_weap_Name' class="form-control" value="{{i.weapon_Name}}" placeholder="Weapon Name">
+                                  <input type='text' name='e_weap_Name' id="weap_Name" class="form-control" value="{{i.weapon_Name}}" placeholder="Weapon Name">
                               </div>
                               <div class="form-check">
                                 <label for="e_weap_Price" class="col-form-label bg-dark text-white">Weapon Price:</label>
-                                <input type='number' name='e_weap_Price' class="form-control" value="{{i.weapon_Price}}" placeholder="Weapon Price">
+                                <input type='number' name='e_weap_Price' id="weap_Price" class="form-control" value="{{i.weapon_Price}}" placeholder="Weapon Price">
                               </div>
                               <div class="form-check">
                                 <label for="e_weap_Type" class="col-form-label bg-dark text-white">Weapon Type:</label>
                                 <div class="form-check">
-                                  <select class="form-control" name='e_weap_Type'aria-labelledby="dropdownMenuButton">
+                                  <select class="form-control" name='e_weap_Type' id="weap_Type" aria-labelledby="dropdownMenuButton">
                                     {% for key,value in weapon_types.items %}
                                       {% if key == i.weapon_Type %}
                                         <option selected type='dropdown-item' class="form-control" value="{{ i.weapon_Type }}">
@@ -180,14 +180,24 @@
                               </div>
                               <div class="form-check">
                                 <label for="e_weap_Stock" class="col-form-label bg-dark text-white">Weapon Stock:</label>
-                                <input type='number' name='e_weap_Stock' class="form-control" value="{{i.weapon_Stock}}" placeholder="Weapon Stock">
+                                <input type='number' name='e_weap_Stock' id="weap_Stock" class="form-control" value="{{i.weapon_Stock}}" placeholder="Weapon Stock">
                               </div>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-primary">Save changes</button>
+                              <button type="submit" id='Edit_Submit' class="btn btn-primary">Save changes</button>
                             </div>
                           </form>
+                          <script type="text/javascript">
+                            function form_submit() {
+                              document.getElementById("edit_form").submit();
+                              document.getElementById('weap_Name');
+                              document.getElementById('weap_Price');
+                              document.getElementById('weap_Type');
+                              document.getElementById('weap_Stock');
+                              console.log('edit_form');
+                             }    
+                            </script>
                         </div>
                       </div>
                     </div>
@@ -216,6 +226,17 @@
 
       <script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+      $(document).ready(function(){
+        $('.Edit_Submit').click(function() {
+          var e_nme = $(  this ).parent().find("#weap_Name").val(String);
+          var e_Price = $( this ).parent().find("#weap_Price").val();
+          var e_Type = $( this ).parent().find("#weap_Type").val(String);
+          var e_Stock = $( this ).parent().find("weap_Stock").val();
+          console.log(e_nme, e_Price, e_Type, e_Stock)
+
+        })
+      })
+      
       $(document).ready(function(){
             $('.itembut').click(function() {
               var amt = $( this ).parent().parent().find(".lineamount").val();

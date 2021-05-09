@@ -65,13 +65,28 @@ def delete_weapon(request, pk):
     return redirect('inventory')
 
 def edit_weapon(request,pk):
-    e_weapon = weapon.objects.get(pk=pk)
-    e_weapon.weapon_Name = request.POST.get('e_weap_Name', default=e_weapon.weapon_Name)
-    print(e_weapon.weapon_Name)
-    e_weapon.weapon_Price = request.POST.get('e_weap_Price', default=e_weapon.weapon_Price)
-    e_weapon.weapon_Type = request.POST.get('e_weap_Type', default=e_weapon.weapon_Type)
-    e_weapon.weapon_Stock = request.POST.get('e_weap_Stock', default=e_weapon.weapon_Stock)
-    e_weapon.save()
+    
+    edit = get_object_or_404(weapon, pk=pk)
+
+    e_weapName = request.POST.get('e_weap_Name')
+    e_weapPrice = request.POST.get('e_weap_Price')
+    e_weapType = request.POST.get('e_weap_Type')
+    e_weapStock = request.POST.get('e_weap_Stock')
+    print(e_weapName, e_weapPrice, e_weapType, e_weapStock)
+
+    edit.weapon_Name = e_weapName
+    edit.weapon_Price = e_weapPrice
+    edit.weapon_Type = e_weapType
+    edit.weapon_Stock = e_weapStock
+    edit.save()
+    print(str(edit))
+    
+    # str_edit = str(edit)
+    # edited_weapon = str_edit.split('&')
+    # for i in edited_weapon:
+    #     raw_data = i.split("=")
+    #     FweapName = raw_data[0]
+    
     
     return redirect('inventory')
 

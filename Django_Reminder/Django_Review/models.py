@@ -48,7 +48,7 @@ class weapon(models.Model):
     def getStock(self):
         return self.weapon_Stock
     def __str__(self):
-        return str(self.pk) + ": " + self.weapon_Name
+        return str(self.pk) + ": " + self.weapon_Name + ": " + str(self.weapon_Price) + ": " + self.weapon_Type + ": " + str(self.weapon_Stock)
 
 class order(models.Model):
     CASH = 'CH'
