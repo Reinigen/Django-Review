@@ -78,7 +78,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
         'NAME': 'Django_Reminder',
-        'PASSWORD': 'Cabbagesarel1fe',
+        'PASSWORD': 'INSERT PASSCODE HERE',
         'HOST': 'localhost',
         'PORT': '3306',
     }
